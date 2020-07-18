@@ -1,0 +1,48 @@
+#comands start image docker: 
+https://www.myonlineedu.com/blog/view/14/build-docker-container-for-nodejs-and-mysql-based-application
+
+# criar sua img
+docker build -t node-express-docker .
+
+# rodar sua img em um container
+docker run -it -p 3000:9000 - $(pwd):/app node-express-docker
+
+docker run -d -p 3000:9000 node-express-docker (' -d é para deixar rodando em segundo plano')
+
+# para parar o container
+docker stop <container ID> 
+
+# listar containers em execução
+docker ps (pode usar o -a)
+
+# listar todos containers 
+docker containers ls
+
+# listar images
+docker images 
+
+# especificando uma versão
+docker pull ubuntu:14.04
+
+# baixar uma img 
+docker pull <nome da img>
+
+# acesar o terminal do container do ubuntu
+docker run -it ubuntu bash
+
+# sair do container 
+exit ou CTRL + D
+
+# para limpar todos seus containers 
+docker system prune -a ('não faça isso sem autorização kkk')
+
+# para commitar uma img modificada e compartilha-la
+docker ps -l
+docker commit  <Container ID> <nome original da img>:<novo nome> 
+
+# rodar a img modificada 
+docker run -ti ubuntu:ubuntoModificado bash
+
+
+
+

@@ -1,543 +1,543 @@
-# Comandos, ajuda e dicas do Docker
+# Docker Commands, Help & Tips
 
-### Mostrar comandos e comandos de gerenciamento
+### Show commands & management commands
 
-`` ``
+```
 $ docker
-`` ``
+```
 
-Informações sobre a versão do Docker
+### Docker version info
 
-`` ``
-Versão do docker
-`` ``
+```
+$ docker version
+```
 
-### Mostrar informações como número de contêineres etc.
+### Show info like number of containers, etc
 
-`` ``
+```
 $ docker info
-`` ``
+```
 
-# TRABALHANDO COM RECIPIENTES
+# WORKING WITH CONTAINERS
 
-### Crie uma execução de um contêiner em primeiro plano
+### Create an run a container in foreground
 
-`` ``
-Contêiner $ docker executado -it -p 80:80 nginx
-`` ``
+```
+$ docker container run -it -p 80:80 nginx
+```
 
-### Crie uma execução de um contêiner em segundo plano
+### Create an run a container in background
 
-`` ``
-Contêiner $ docker executado -d -p 80:80 nginx
-`` ``
+```
+$ docker container run -d -p 80:80 nginx
+```
 
-### Forma abreviada
+### Shorthand
 
-`` ``
-Contêiner $ docker executado -d -p 80:80 nginx
-`` ``
+```
+$ docker container run -d -p 80:80 nginx
+```
 
-### Nomeando contêineres
+### Naming Containers
 
-`` ``
-O contêiner $ docker executa -d -p 80:80 --name nginx-server nginx
-`` ``
+```
+$ docker container run -d -p 80:80 --name nginx-server nginx
+```
 
-DICA: O QUE EXECUTEU
+### TIP: WHAT RUN DID
 
-- Procurou uma imagem chamada nginx no cache de imagens
-- Se não for encontrado no cache, ele procurará o repositório de imagens padrão no Dockerhub
-- Puxou para baixo (versão mais recente), armazenada no cache de imagens
-- Iniciou em um novo contêiner
-- Especificamos pegar a porta 80- no host e encaminhar para a porta 80 no contêiner
-- Poderíamos executar "contêiner de docker $ executado - publique 8000: 80 --detach nginx" para usar a porta 8000
-- Podemos especificar versões como "nginx: 1.09"
+- Looked for image called nginx in image cache
+- If not found in cache, it looks to the default image repo on Dockerhub
+- Pulled it down (latest version), stored in the image cache
+- Started it in a new container
+- We specified to take port 80- on the host and forward to port 80 on the container
+- We could do "$ docker container run --publish 8000:80 --detach nginx" to use port 8000
+- We can specify versions like "nginx:1.09"
 
-### Listar contêineres em execução
+### List running containers
 
-`` ``
+```
 $ docker container ls
-`` ``
+```
 
-OU
+OR
 
-`` ``
+```
 $ docker ps
-`` ``
+```
 
-### Listar todos os contêineres (mesmo que não estejam em execução)
+### List all containers (Even if not running)
 
-`` ``
+```
 $ docker container ls -a
-`` ``
+```
 
-### Parar contêiner
+### Stop container
 
-`` ``
+```
 $ docker container stop [ID]
-`` ``
+```
 
-### Interrompa todos os contêineres em execução
+### Stop all running containers
 
-`` ``
-$ docker stop $ (docker ps -aq)
-`` ``
+```
+$ docker stop $(docker ps -aq)
+```
 
-### Remover contêiner (não é possível remover contêineres em execução, deve parar primeiro)
+### Remove container (Can not remove running containers, must stop first)
 
-`` ``
+```
 $ docker container rm [ID]
-`` ``
+```
 
-### Para remover um contêiner em execução, use force (-f)
+### To remove a running container use force(-f)
 
-`` ``
-Contêiner $ docker rm -f [ID]
-`` ``
+```
+$ docker container rm -f [ID]
+```
 
-### Remover vários contêineres
+### Remove multiple containers
 
-`` ``
+```
 $ docker container rm [ID] [ID] [ID]
-`` ``
+```
 
-### Remova todos os contêineres
+### Remove all containers
 
-`` ``
-$ docker rm $ (janela de encaixe ps -aq)
-`` ``
+```
+$ docker rm $(docker ps -aq)
+```
 
-### Obter logs (usar nome ou ID)
+### Get logs (Use name or ID)
 
-`` ``
-Logs do contêiner de $ docker [NAME]
-`` ``
+```
+$ docker container logs [NAME]
+```
 
-### Listar processos em execução no contêiner
+### List processes running in container
 
-`` ``
+```
 $ docker container top [NAME]
-`` ``
+```
 
-#### DICA: SOBRE RECIPIENTES
+#### TIP: ABOUT CONTAINERS
 
-Os contêineres do Docker costumam ser comparados às máquinas virtuais, mas na verdade são apenas processos em execução no sistema operacional do host. No Windows / Mac, o Docker é executado em uma mini-VM, para ver os processos que você precisará conectar diretamente a ele. No Linux, no entanto, você pode executar "ps aux" e ver os processos diretamente
+Docker containers are often compared to virtual machines but they are actually just processes running on your host os. In Windows/Mac, Docker runs in a mini-VM so to see the processes youll need to connect directly to that. On Linux however you can run "ps aux" and see the processes directly
 
-# COMANDOS DE IMAGEM
+# IMAGE COMMANDS
 
-### Liste as imagens que extraímos
+### List the images we have pulled
 
-`` ``
+```
 $ docker image ls
-`` ``
+```
 
-Também podemos apenas puxar imagens
+### We can also just pull down images
 
-`` ``
+```
 $ docker pull [IMAGE]
-`` ``
+```
 
-### Remover imagem
+### Remove image
 
-`` ``
+```
 $ docker image rm [IMAGE]
-`` ``
+```
 
-### Remova todas as imagens
+### Remove all images
 
-`` ``
-$ docker rmi $ (imagens do docker -a -q)
-`` ``
+```
+$ docker rmi $(docker images -a -q)
+```
 
-#### DICA: SOBRE IMAGENS
+#### TIP: ABOUT IMAGES
 
-- Imagens são bianários e dependências de aplicativos com metadados sobre os dados da imagem e como executá-la
-- As imagens não são um sistema operacional completo. Sem kernel, módulos de kernel (drivers)
-- Host fornece o kernel, grande diferença entre VM
+- Images are app bianaries and dependencies with meta data about the image data and how to run the image
+- Images are no a complete OS. No kernel, kernel modules (drivers)
+- Host provides the kernel, big difference between VM
 
-### Alguma amostra de criação de contêiner
+### Some sample container creation
 
 NGINX:
 
-`` ``
-O contêiner $ docker executa -d -p 80:80 --name nginx nginx (-p 80:80 é opcional, pois é executado no 80 por padrão)
-`` ``
+```
+$ docker container run -d -p 80:80 --name nginx nginx (-p 80:80 is optional as it runs on 80 by default)
+```
 
 APACHE:
 
-`` ``
-O contêiner $ docker executa -d -p 8080: 80 --name apache httpd
-`` ``
+```
+$ docker container run -d -p 8080:80 --name apache httpd
+```
 
 MONGODB:
 
-`` ``
-$ docker container run -d -p 27017: 27017 --name mongo mongo
-`` ``
+```
+$ docker container run -d -p 27017:27017 --name mongo mongo
+```
 
 MYSQL:
 
-`` ``
-O contêiner $ docker executa -d -p 3306: 3306 --name mysql --env MYSQL_ROOT_PASSWORD = 123456 mysql
-`` ``
+```
+$ docker container run -d -p 3306:3306 --name mysql --env MYSQL_ROOT_PASSWORD=123456 mysql
+```
 
-## INFORMAÇÕES DO RECIPIENTE
+## CONTAINER INFO
 
-### Visualizar informações no contêiner
+### View info on container
 
-`` ``
-O contêiner $ docker inspeciona [NAME]
-`` ``
+```
+$ docker container inspect [NAME]
+```
 
-Propriedade específica (--format)
+### Specific property (--format)
 
-`` ``
-O contêiner $ docker inspeciona --format '{{.NetworkSettings.IPAddress}}' [NAME]
-`` ``
+```
+$ docker container inspect --format '{{ .NetworkSettings.IPAddress }}' [NAME]
+```
 
-### Estatísticas de desempenho (CPU, mem, rede, disco, etc)
+### Performance stats (cpu, mem, network, disk, etc)
 
-`` ``
-Estatísticas do contêiner de $ docker [NAME]
-`` ``
+```
+$ docker container stats [NAME]
+```
 
-## ACESSAR RECIPIENTES
+## ACCESSING CONTAINERS
 
-### Crie um novo contêiner nginx e faça o bash no
+### Create new nginx container and bash into
 
-`` ``
-Contêiner de docker $ run -it --name [NAME] nginx bash
-`` ``
+```
+$ docker container run -it --name [NAME] nginx bash
+```
 
-- i = interativo Mantenha o STDIN aberto se não estiver conectado
-- t = tty - Abrir prompt
+- i = interactive Keep STDIN open if not attached
+- t = tty - Open prompt
 
-** Para Git Bash, use "winpty" **
+**For Git Bash, use "winpty"**
 
-`` ``
-Contêiner de docker $ winpty executado -it --name [NAME] nginx bash
-`` ``
+```
+$ winpty docker container run -it --name [NAME] nginx bash
+```
 
-### Executar / criar contêiner Ubuntu
+### Run/Create Ubuntu container
 
-`` ``
+```
 $ docker container run -it --name ubuntu ubuntu
-`` ``
+```
 
-** (sem bash porque o ubuntu usa bash por padrão) **
+**(no bash because ubuntu uses bash by default)**
 
-### Você também pode fazer isso quando sair do contêiner, não permanecer usando o sinalizador -rm
+### You can also make it so when you exit the container does not stay by using the -rm flag
 
-`` ``
-O contêiner $ docker executa --rm -it --name [NAME] ubuntu
-`` ``
+```
+$ docker container run --rm -it --name [NAME] ubuntu
+```
 
-### Acesse um contêiner já criado, comece com -ai
+### Access an already created container, start with -ai
 
-`` ``
+```
 $ docker container start -ai ubuntu
-`` ``
+```
 
-### Use exec para editar configurações, etc
+### Use exec to edit config, etc
 
-`` ``
+```
 $ docker container exec -it mysql bash
-`` ``
+```
 
-### Alpine é uma distribuição Linux muito pequena, boa para docker
+### Alpine is a very small Linux distro good for docker
 
-`` ``
-$ docker contêiner executado - sh alpino
-`` ``
+```
+$ docker container run -it alpine sh
+```
 
-(use sh porque não inclui o bash)
-(alpine usa apk para seu gerenciador de pacotes - pode instalar o bash, se quiser)
+(use sh because it does not include bash)
+(alpine uses apk for its package manager - can install bash if you want)
 
-# REDE
+# NETWORKING
 
-### "bridge" ou "docker0" é a rede padrão
+### "bridge" or "docker0" is the default network
 
-### Obter porta
+### Get port
 
-`` ``
-Porta do contêiner $ docker [NAME]
-`` ``
+```
+$ docker container port [NAME]
+```
 
-### Listar redes
+### List networks
 
-`` ``
+```
 $ docker network ls
-`` ``
+```
 
-### Inspecionar rede
+### Inspect network
 
-`` ``
-A rede $ docker inspeciona [NETWORK_NAME]
-("ponte" é o padrão)
-`` ``
+```
+$ docker network inspect [NETWORK_NAME]
+("bridge" is default)
+```
 
-### Criar rede
+### Create network
 
-`` ``
-Rede $ docker criar [NETWORK_NAME]
-`` ``
+```
+$ docker network create [NETWORK_NAME]
+```
 
-### Criar contêiner na rede
+### Create container on network
 
-`` ``
-Contêiner de docker $ run -d --name [NAME] --network [NETWORK_NAME] nginx
-`` ``
+```
+$ docker container run -d --name [NAME] --network [NETWORK_NAME] nginx
+```
 
-### Conecte o contêiner existente à rede
+### Connect existing container to network
 
-`` ``
-Conexão de rede $ docker [NETWORK_NAME] [CONTAINER_NAME]
-`` ``
+```
+$ docker network connect [NETWORK_NAME] [CONTAINER_NAME]
+```
 
-### Desconectar contêiner da rede
+### Disconnect container from network
 
-`` ``
-Desconectar a rede do docker [NETWORK_NAME] [CONTAINER_NAME]
-`` ``
+```
+$ docker network disconnect [NETWORK_NAME] [CONTAINER_NAME]
+```
 
-### Desconecte a rede do contêiner
+### Detach network from container
 
-`` ``
-desconexão da rede do docker
-`` ``
+```
+$ docker network disconnect
+```
 
-# MARCAÇÃO DE IMAGEM E EMPURRAR PARA DOCKERHUB
+# IMAGE TAGGING & PUSHING TO DOCKERHUB
 
-# tags são marcadores que apontam para um ID de imagem
+# tags are labels that point ot an image ID
 
-`` ``
+```
 $ docker image ls
-`` ``
+```
 
-Você verá que cada imagem tem uma tag
+Youll see that each image has a tag
 
-### Voltar a etiquetar a imagem existente
+### Retag existing image
 
-`` ``
-tag de imagem $ docker nginx btraversy / nginx
-`` ``
+```
+$ docker image tag nginx btraversy/nginx
+```
 
-### Carregar no dockerhub
+### Upload to dockerhub
 
-`` ``
-$ docker image push bradtraversy / nginx
-`` ``
+```
+$ docker image push bradtraversy/nginx
+```
 
-### Se negado, faça
+### If denied, do
 
-`` ``
+```
 $ docker login
-`` ``
+```
 
-### Adicionar tag à nova imagem
+### Add tag to new image
 
-`` ``
-Etiqueta de imagem $ docker bradtraversy / nginx bradtraversy / nginx: testing
-`` ``
+```
+$ docker image tag bradtraversy/nginx bradtraversy/nginx:testing
+```
 
-### PEÇAS DOCKERFILE
+### DOCKERFILE PARTS
 
-- FROM - O sistema operacional usado. Comum é alpino, debian, ubuntu
-- ENV - Variáveis ​​de ambiente
-- RUN - Executar comandos / scripts de shell, etc
-- EXPOSE - Portas para expor
-- CMD - Comando final executado quando você inicia um novo contêiner a partir da imagem
-- WORKDIR - Define o diretório de trabalho (também pode usar 'RUN cd / some / path')
-- COPY # Copia arquivos do host para o contêiner
+- FROM - The os used. Common is alpine, debian, ubuntu
+- ENV - Environment variables
+- RUN - Run commands/shell scripts, etc
+- EXPOSE - Ports to expose
+- CMD - Final command run when you launch a new container from image
+- WORKDIR - Sets working directory (also could use 'RUN cd /some/path')
+- COPY # Copies files from host to container
 
-### Construir imagem a partir do dockerfile (o nome pode ser o que for)
+### Build image from dockerfile (reponame can be whatever)
 
-### Do mesmo diretório que o Dockerfile
+### From the same directory as Dockerfile
 
-`` ``
-$ docker image build -t [REPONAME].
-`` ``
+```
+$ docker image build -t [REPONAME] .
+```
 
-#### DICA: CACHE E PEDIDO
+#### TIP: CACHE & ORDER
 
-- Se você executar novamente a compilação, será rápido porque tudo é armazenado em cache.
-- Se você alterar uma linha e executar novamente, essa linha e tudo o que for depois não serão armazenados em cache
-- Mantenha as coisas que mais mudam na parte inferior do Dockerfile
+- If you re-run the build, it will be quick because everythging is cached.
+- If you change one line and re-run, that line and everything after will not be cached
+- Keep things that change the most toward the bottom of the Dockerfile
 
-# DOCKERFILE EXTENDENTE
+# EXTENDING DOCKERFILE
 
-### Arquivo de encaixe personalizado para paqge html com nginx
+### Custom Dockerfile for html paqge with nginx
 
-`` ``
-FROM nginx: latest # Estende o nginx para que tudo incluído nessa imagem seja incluído aqui
-WORKDIR / usr / share / nginx / html
+```
+FROM nginx:latest # Extends nginx so everything included in that image is included here
+WORKDIR /usr/share/nginx/html
 COPY index.html index.html
-`` ``
+```
 
-### Compilar imagem do Dockerfile
+### Build image from Dockerfile
 
-`` ``
+```
 $ docker image build -t nginx-website
-`` ``
+```
 
-### Executando
+### Running it
 
-`` ``
+```
 $ docker container run -p 80:80 --rm nginx-website
-`` ``
+```
 
-### Identifique e envie para o Dockerhub
+### Tag and push to Dockerhub
 
-`` ``
-$ docker image tag nginx-website: mais recente btraversy / nginx-website: mais recente
-`` ``
+```
+$ docker image tag nginx-website:latest btraversy/nginx-website:latest
+```
 
-`` ``
-$ docker image push bradtraversy / nginx-website
-`` ``
+```
+$ docker image push bradtraversy/nginx-website
+```
 
 # VOLUMES
 
-Volume - Faz localização especial fora do contêiner UFS. Usado para bancos de dados
+### Volume - Makes special location outside of container UFS. Used for databases
 
-### Vincular o caminho do contêiner Mount -Link ao caminho do host
+### Bind Mount -Link container path to host path
 
-### Verificar volumes
+### Check volumes
 
-`` ``
+```
 $ docker volume ls
-`` ``
+```
 
-### Limpar volumes não utilizados
+### Cleanup unused volumes
 
-`` ``
-Remoção do volume $ docker
-`` ``
+```
+$ docker volume prune
+```
 
-### Puxe a imagem do mysql para testar
+### Pull down mysql image to test
 
-`` ``
+```
 $ docker pull mysql
-`` ``
+```
 
-### Inspecione e veja o volume
+### Inspect and see volume
 
-`` ``
-A imagem do docker inspeciona o mysql
-`` ``
+```
+$ docker image inspect mysql
+```
 
-### Executar contêiner
+### Run container
 
-`` ``
-Contêiner $ docker executa -d --name mysql -e MYSQL_ALLOW_EMPTY_PASSWORD = True mysql
-`` ``
+```
+$ docker container run -d --name mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=True mysql
+```
 
-### Inspecione e veja o volume no contêiner
+### Inspect and see volume in container
 
-`` ``
-O contêiner $ docker inspeciona o mysql
-`` ``
+```
+$ docker container inspect mysql
+```
 
-#### DICA: Suportes
+#### TIP: Mounts
 
-- Você também verá o volume em montagens
-- O contêiner obtém seu próprio local uniqe no host para armazenar esses dados
-- Fonte: xxx é onde ele mora no host
+- You will also see the volume under mounts
+- Container gets its own uniqe location on the host to store that data
+- Source: xxx is where it lives on the host
 
-### Verificar volumes
+### Check volumes
 
-`` ``
+```
 $ docker volume ls
-`` ``
+```
 
-** Não há como diferenciar volumes, por exemplo, com 2 contêineres mysql; portanto, usamos volumes nomeados **
+**There is no way to tell volumes apart for instance with 2 mysql containers, so we used named volumes**
 
-Volumes nomeados (comando Add -v) (o nome aqui é mysql-db, que pode ser qualquer coisa)
+### Named volumes (Add -v command)(the name here is mysql-db which could be anything)
 
-`` ``
-O contêiner $ docker executa -d --name mysql -e MYSQL_ALLOW_EMPTY_PASSWORD = True -v mysql-db: / var / lib / mysql mysql
-`` ``
+```
+$ docker container run -d --name mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=True -v mysql-db:/var/lib/mysql mysql
+```
 
-### Inspecionar novo volume nomeado
+### Inspect new named volume
 
-`` ``
-volume do docker inspecionar mysql-db
-`` ``
+```
+docker volume inspect mysql-db
+```
 
-# MONTAGENS BIND
+# BIND MOUNTS
 
-- Não é possível usar no Dockerfile, especificado em tempo de execução (usa -v também)
-- ... execute -v / Usuários / brad / stuff: / path / container (mac / linux)
-- ... execute -v // c / Usuários / brad / stuff: / path / container (windows)
+- Can not use in Dockerfile, specified at run time (uses -v as well)
+- ... run -v /Users/brad/stuff:/path/container (mac/linux)
+- ... run -v //c/Users/brad/stuff:/path/container (windows)
 
-** DICA: Em vez de digitar o caminho local, para o diretório de trabalho, use $ (pwd): / path / container - No Windows, pode não funcionar, a menos que você esteja na pasta de usuários **
+**TIP: Instead of typing out local path, for working directory use $(pwd):/path/container - On windows may not work unless you are in your users folder**
 
-### Execute e possa editar o arquivo index.html (o diretório local deve ter o Dockerfile e o index.html)
+### Run and be able to edit index.html file (local dir should have the Dockerfile and the index.html)
 
-`` ``
-O contêiner do docker $ executa -p 80:80 -v $ (pwd): / usr / share / nginx / html nginx
-`` ``
+```
+$ docker container run  -p 80:80 -v $(pwd):/usr/share/nginx/html nginx
+```
 
-### Entre no contêiner e verifique
+### Go into the container and check
 
-`` ``
+```
 $ docker container exec -it nginx bash
-$ cd / usr / share / nginx / html
+$ cd /usr/share/nginx/html
 $ ls -al
-`` ``
+```
 
-### Você pode criar um arquivo no contêiner e ele também existirá no host
+### You could create a file in the container and it will exiost on the host as well
 
-`` ``
+```
 $ touch test.txt
-`` ``
+```
 
 # DOCKER COMPOSE
 
-- Configurar relacionamentos entre contêineres
-- Salve as configurações de execução do contêiner do docker em um arquivo fácil de ler
-- 2 partes: arquivo YAML (docker.compose.yml) + ferramenta CLI (docker-compose)
+- Configure relationships between containers
+- Save our docker container run settings in easy to read file
+- 2 Parts: YAML File (docker.compose.yml) + CLI tool (docker-compose)
 
-# Dock # docker.compose.yml - Descreve soluções para
+### 1. docker.compose.yml - Describes solutions for
 
-- recipientes
-- redes
+- containers
+- networks
 - volumes
 
-### 2. docker-compose CLI - usado para automação local de desenvolvimento / teste com arquivos YAML
+### 2. docker-compose CLI - used for local dev/test automation with YAML files
 
-### Exemplo de arquivo de composição (do curso Bret Fishers)
+### Sample compose file (From Bret Fishers course)
 
-`` ``
-versão 2'
+```
+version: '2'
 
-# igual a
-# docker run -p 80: 4000 -v $ (pwd): / site bretfisher / jekyll-serve
+# same as
+# docker run -p 80:4000 -v $(pwd):/site bretfisher/jekyll-serve
 
-Serviços:
+services:
   jekyll:
-    imagem: bretfisher / jekyll-serve
+    image: bretfisher/jekyll-serve
     volumes:
-      - .:/local
-    portas:
-      - '80: 4000 '
-`` ``
+      - .:/site
+    ports:
+      - '80:4000'
+```
 
-### Para correr
+### To run
 
-`` ``
-docker-compor
-`` ``
+```
+docker-compose up
+```
 
-### Você pode executar em segundo plano com
+### You can run in background with
 
-`` ``
-docker-compor up -d
-`` ``
+```
+docker-compose up -d
+```
 
-### Limpar
+### To cleanup
 
-`` ``
-docker-compor para baixo
-`` ``
+```
+docker-compose down
+```
